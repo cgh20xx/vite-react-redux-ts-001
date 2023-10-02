@@ -49,7 +49,7 @@ const Item = styled.div`
 function App() {
 
   const todoReducer = useAppSelector(state => state.todoReducer)
-  console.log(todoReducer.todoList);
+  const todoList = todoReducer.todoList
   return (
     <Wrapper>
       <Title>TODO LIST</Title>
@@ -61,6 +61,18 @@ function App() {
         Record Timestamp
       </SubmitBtn>
       <Title>List</Title>
+
+      {
+        todoList.map((data, index) => {
+          return (
+            <Item key={data}>
+              <b>{ index + 1 }</b>
+              { data }
+            </Item>
+          )
+        })
+      }
+
     </Wrapper>
   );
 }
