@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 import { useAppSelector, useAppDispatch } from './hooks'
 import { addTodo, addTimestamp } from './slices/todo'
@@ -53,11 +54,22 @@ function App() {
   const todoList = todoReducer.todoList
 
   const dispatch = useAppDispatch()
+
+  const [text, setText] = useState('')
   return (
     <Wrapper>
       <Title>TODO LIST</Title>
-      <NoteInput type="text" />
-      <SubmitBtn>
+      <NoteInput type="text" value={text} onChange={(e) => {
+        setText(e.target.value)
+      }} />
+      <SubmitBtn onClick={() => {
+        if (text === '') {
+          alert('請輸入內容')
+          return;
+        }
+        dispatch(addTodo(text))
+        setText('')
+      }}>
         Submit
       </SubmitBtn>
       <SubmitBtn onClick={() => {
