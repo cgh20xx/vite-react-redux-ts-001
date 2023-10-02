@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client'
 import App from '@/App'
 import './index.css'
 import { Provider } from 'react-redux'
-import todoStore from './store'
+import { store } from './store'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <Provider store={todoStore}>
+    <Provider store={store}>
       <App />
     </Provider>
   </React.StrictMode>,
