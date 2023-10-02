@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useAppSelector } from './hooks'
 
 const Wrapper = styled.div`
   padding: 1.5rem;
@@ -47,6 +48,8 @@ const Item = styled.div`
 
 function App() {
 
+  const todoReducer = useAppSelector(state => state.todoReducer)
+  console.log(todoReducer.todoList);
   return (
     <Wrapper>
       <Title>TODO LIST</Title>
