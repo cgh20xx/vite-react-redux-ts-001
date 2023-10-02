@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { useAppSelector } from './hooks'
+import { useAppSelector, useAppDispatch } from './hooks'
+import { addTodo, addTimestamp } from './slices/todo'
 
 const Wrapper = styled.div`
   padding: 1.5rem;
@@ -50,6 +51,8 @@ function App() {
 
   const todoReducer = useAppSelector(state => state.todoReducer)
   const todoList = todoReducer.todoList
+
+  const dispatch = useAppDispatch()
   return (
     <Wrapper>
       <Title>TODO LIST</Title>
@@ -57,7 +60,9 @@ function App() {
       <SubmitBtn>
         Submit
       </SubmitBtn>
-      <SubmitBtn>
+      <SubmitBtn onClick={() => {
+        dispatch(addTimestamp())
+      }}>
         Record Timestamp
       </SubmitBtn>
       <Title>List</Title>
