@@ -12,3 +12,14 @@ export const loggerMiddleware: Middleware<
   console.log('next state:', store.getState());
   return result
 }
+
+export const secoundMiddleware: Middleware<
+  object,
+  RootState
+> = store => next => action => {
+  // next 其實就是原始的 store.dispatch
+  console.log('dispatching 2:', action);
+  const result = next(action)
+  console.log('next state 2:', store.getState());
+  return result
+}

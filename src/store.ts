@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import todoReducer from './slices/todo'
-import { loggerMiddleware } from './middleware'
+import { loggerMiddleware, secoundMiddleware } from './middleware'
 
 // 因一個 store 會有多個 reducer， 所以使用 combineReducers 集結所有 reducer
 const reducers = combineReducers({
@@ -10,7 +10,9 @@ const reducers = combineReducers({
 export const store = configureStore({
   reducer: reducers,
   middleware(getDefaultMiddleware) {
-    return getDefaultMiddleware().concat(loggerMiddleware)
+    return getDefaultMiddleware()
+      .concat(loggerMiddleware)
+      .concat(secoundMiddleware)
   },
 })
 
