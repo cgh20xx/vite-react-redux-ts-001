@@ -1,10 +1,14 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import todoReducer from './slices/todo'
 import { loggerMiddleware, secoundMiddleware } from './middleware'
+import { todoApi } from './services/todoApiService'
+
+console.log({ todoApi});
 
 // 因一個 store 會有多個 reducer， 所以使用 combineReducers 集結所有 reducer
 const reducers = combineReducers({
-  todoReducer
+  todoReducer,
+  [todoApi.reducerPath]: todoApi.reducer,
 })
 
 export const store = configureStore({
