@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { useAppSelector, useAppDispatch } from './hooks'
 import { addTodo, addTimestamp } from './slices/todo'
 
+// rtk-quer hooks 參考：https://redux-toolkit.js.org/tutorials/rtk-query#use-the-query-in-a-component
+import { useGetTodoByIdQuery } from './services/todoApiService'
+
 const Wrapper = styled.div`
   padding: 1.5rem;
 `
@@ -56,6 +59,10 @@ function App() {
   const dispatch = useAppDispatch()
 
   const [text, setText] = useState('')
+  
+  // 以下客製的 useXXXXQuery hook 可以取得下列 endpoints
+  const { data, error, isLoading } = useGetTodoByIdQuery('2')
+
   return (
     <Wrapper>
       <Title>TODO LIST</Title>
@@ -88,6 +95,20 @@ function App() {
             </Item>
           )
         })
+      }
+
+      <Title>Get Todo API</Title>
+      {
+        error ? (
+          <div>Oh no, there was an error</div>
+        ) : isLoading ? (
+          <div>Loading...</div>
+        ) : data ? (
+          <div>
+            <p>todo id: {data.id}</p>
+            <p>todo title: {data.title}</p>
+          </div>
+        ) : null
       }
 
     </Wrapper>
