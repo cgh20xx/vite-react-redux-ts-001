@@ -1,9 +1,9 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import todoReducer from './slices/todo'
-import { loggerMiddleware, secoundMiddleware } from './middleware'
+// import { loggerMiddleware, secoundMiddleware } from './middleware'
 import { todoApi } from './services/todoApiService'
 
-console.log({ todoApi});
+console.log({ todoApi });
 
 // 因一個 store 會有多個 reducer， 所以使用 combineReducers 集結所有 reducer
 const reducers = combineReducers({
@@ -13,10 +13,13 @@ const reducers = combineReducers({
 
 export const store = configureStore({
   reducer: reducers,
+  // Adding the api middleware enables caching, invalidation, polling,
+  // and other useful features of `rtk-query`.
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware()
-      .concat(loggerMiddleware)
-      .concat(secoundMiddleware)
+      // .concat(loggerMiddleware)
+      // .concat(secoundMiddleware)
+      .concat(todoApi.middleware)
   },
 })
 
