@@ -5,14 +5,12 @@ import { todoApi } from './services/todoApiService'
 
 console.log({ todoApi });
 
-// 因一個 store 會有多個 reducer， 所以使用 combineReducers 集結所有 reducer
-const reducers = combineReducers({
-  todoReducer,
-  [todoApi.reducerPath]: todoApi.reducer,
-})
-
 export const store = configureStore({
-  reducer: reducers,
+  // 補充：RTK 會將 reducer 傳遞給 combineReducers()，不再需要使用 combineReducers 包多個 reducer。
+  reducer: {
+    todoReducer,
+    [todoApi.reducerPath]: todoApi.reducer,
+  },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware(getDefaultMiddleware) {
@@ -26,8 +24,8 @@ export const store = configureStore({
 // Infer the `RootState` and `AppDispatch` types from the store itself
 // export type RootState = ReturnType<typeof store.getState>
 
-// 導入 middleware 後 RootState 的 type 需修改為使用 combineReducers 的回傳值，store 才不會報錯。
-export type RootState = ReturnType<typeof reducers>
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
 
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
